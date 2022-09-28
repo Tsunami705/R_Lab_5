@@ -1,20 +1,32 @@
+
+
+
 library(jsonlite)
 library(httr)
 library(tidyverse)
 
 
-#Use kolada API
-#Returns the data of Kolada database, where kpi, municipality, period are parameters
-#example:
-#    ree<-get_data(link,kpi="N00945",period="2009")
-#    return_df(ree)
+#' Use kolada API
+#'
+#' Returns the data of Kolada database, where kpi, municipality, period are parameters
+#'
+#' @param link A string
+#' @param kpi A string
+#' @param municipality A string
+#' @param period A string
+#' @import jsonlite
+#' @import httr
+#' @import tidyverse
+#' @example
+#' get_data(link,kpi="N00945",period="2009")
+#' @export
 
 get_data<-function(link="http://api.kolada.se/v2/data/",
                    kpi="",
                    municipality="",
                    period=""){
   Sys.setenv(TZ="Europe/Stockholm")
-  
+
   if(kpi!=""){kpi<-paste("kpi",kpi,sep="/")}
   if(municipality!=""){municipality<-paste("municipality",municipality,sep="/")}
   if(period!=""){period<-paste("year",period,sep="/")}
@@ -24,12 +36,12 @@ get_data<-function(link="http://api.kolada.se/v2/data/",
                 municipality,
                 period,
                 sep="/")
-  
+
   response<-GET(url)
   #print the content of json text
   toJSON(fromJSON(content(response,as="text")),pretty=TRUE)
   result<-fromJSON(content(response,as="text"))
-  
+
   listl<-list(response,result)
   return(listl)
 }
