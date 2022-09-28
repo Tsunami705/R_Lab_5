@@ -8,7 +8,7 @@ library(tidyverse)
 
 #' Use kolada API
 #'
-#' Returns the data of Kolada database, where kpi, municipality, period are parameters
+#' Returns the data of Kolada database, where kpi, municipality, period are parameters,2 of them should be given
 #'
 #' @param link A string
 #' @param kpi A string
@@ -17,9 +17,11 @@ library(tidyverse)
 #' @import jsonlite
 #' @import httr
 #' @import tidyverse
+#' @seealso https://github.com/Hypergene/kolada
 #' @example
-#' get_data(link,kpi="N00945",period="2009")
+#' rmm<-get_data(link="http://api.kolada.se/v2/data/",kpi="N00945",period="2009")
 #' @export
+#'
 
 get_data<-function(link="http://api.kolada.se/v2/data/",
                    kpi="",
@@ -31,11 +33,28 @@ get_data<-function(link="http://api.kolada.se/v2/data/",
   if(municipality!=""){municipality<-paste("municipality",municipality,sep="/")}
   if(period!=""){period<-paste("year",period,sep="/")}
 
-  url<-paste(link,
-                kpi,
-                municipality,
-                period,
-                sep="/")
+  if(kpi!="" && municipality!="" && period!=""){
+    url<-paste(link,
+               kpi,
+               municipality,
+               period,
+               sep="/")
+  }else if(kpi!="" && municipality!="" &&period==""){
+    url<-paste(link,
+               kpi,
+               municipality,
+               sep="/")
+  }else if(kpi!="" && municipality=="" &&period!=""){
+    url<-paste(link,
+               kpi,
+               period,
+               sep="/")
+  }else if(kpi=="" && municipality!="" &&period!=""){
+    url<-paste(link,
+               municipality,
+               period,
+               sep="/")
+  }
 
   response<-GET(url)
   #print the content of json text
@@ -55,6 +74,9 @@ return_df<-function(listl){
     listl[[2]][[2]]$status[i]<-listl[[2]][[2]][[i,4]][[3]]
     listl[[2]][[2]]$value[i]<-listl[[2]][[2]][[i,4]][[4]]
   }
+  df1<-listl[[2]][[2]][,-4]
+  df1$value=as.numeric(df1$value)
+  df1$count=as.numeric(df1$count)
 
   return(listl[[2]][[2]][,-4])
 }

@@ -1,0 +1,44 @@
+---
+title: "my-vignette_lab05"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette_lab05}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(RLab5)
+
+```
+```{r Warning=FALSE}
+library(jsonlite)
+library(httr)
+library(tidyverse)
+
+```
+
+Method
+"There are several methods which can extract and transform the data"
+
+```{r}
+#Returns the data of Kolada database, where kpi, municipality, period are parameters,2 of them should be given
+rmm<-get_data(link="http://api.kolada.se/v2/data/",kpi="N00945",period="2009")
+```
+
+```{r}
+#return the dataframe data
+data = return_df(rmm)
+```
+
+```{r}
+##return the content of response
+jsono_text = return_json(rmm)
+```

@@ -21,5 +21,8 @@ get_data(
 \item{period}{A string}
 }
 \description{
-Returns the data of Kolada database, where kpi, municipality, period are parameters
+Returns the data of Kolada database, where kpi, municipality, period are parameters,2 of them should be given
+}
+\seealso{
+https://github.com/Hypergene/kolada
 }
