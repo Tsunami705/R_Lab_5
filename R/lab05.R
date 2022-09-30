@@ -22,11 +22,12 @@ library(tidyverse)
 #' rmm<-get_data(link="http://api.kolada.se/v2/data/",kpi="N00945",period="2009")
 #' @export
 #'
-
+#'
 get_data<-function(link="http://api.kolada.se/v2/data/",
                    kpi="",
                    municipality="",
                    period=""){
+  encoding = "UTF-8"
   Sys.setenv(TZ="Europe/Stockholm")
 
   if(kpi!=""){kpi<-paste("kpi",kpi,sep="/")}
