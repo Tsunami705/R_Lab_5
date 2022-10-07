@@ -1,11 +1,3 @@
-
-
-
-library(jsonlite)
-library(httr)
-library(tidyverse)
-
-
 #' Use kolada API
 #'
 #' Returns the data of Kolada database, where kpi, municipality, period are parameters,2 of them should be given
@@ -19,7 +11,7 @@ library(tidyverse)
 #' @import tidyverse
 #' @seealso https://github.com/Hypergene/kolada
 #' @example
-#' rmm<-get_data(link="http://api.kolada.se/v2/data/",kpi="N00945",period="2009")
+#' get_data(link="http://api.kolada.se/v2/data/",kpi="N00945",period="2009")
 #' @export
 #'
 #'
@@ -57,10 +49,10 @@ get_data<-function(link="http://api.kolada.se/v2/data/",
                sep="/")
   }
 
-  response<-GET(url)
+  response<-httr::GET(url)
   #print the content of json text
-  toJSON(fromJSON(content(response,as="text")),pretty=TRUE)
-  result<-fromJSON(content(response,as="text"))
+  jsonlite::toJSON(jsonlite::fromJSON(content(response,as="text")),pretty=TRUE)
+  result<-jsonlite::fromJSON(content(response,as="text"))
 
   listl<-list(response,result)
   return(listl)
