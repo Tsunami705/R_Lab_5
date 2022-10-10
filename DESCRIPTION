@@ -1,12 +1,13 @@
 Package: RLab5
-Title: What the Package Does (One Line, Title Case)
+Title: API package
 Version: 0.0.0.9000
 Authors@R: 
     c(person("Shipeng", "Liu", email = "shili506@student.liu.se",
     role = c("aut", "cre")),
     person("Jin", "Yan", email = "jinya425@student.liu.se", 
     role = "aut"))
-Description: What the package does (one paragraph).
+Description: This package is used to get information from Kolada database through
+    an API.
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
